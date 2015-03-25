@@ -1,0 +1,110 @@
+create table forums (
+	id int auto_increment unique,
+	name varchar(60) not null unique,
+	shortname varchar(60) primary key,
+	createDate timestamp DEFAULT current_timestamp,
+	userEmail varchar(30) not null,
+	foreign key (userEmail) references users(email) on update cascade on delete cascade
+);
+
+create table users (
+	id int auto_increment unique,
+	name varchar(30),
+	username varchar(30),
+	email varchar(30) primary key,
+	about text,
+	isAnonymous boolean,
+	createDate timestamp default current_timestamp
+);
+
+
+
+create table follows (
+	id int primary key auto_increment,
+	followee varchar(30) not null,
+	follower varchar(30) not null,
+	unique (followee, follower),
+	foreign key (followee) references users(email) on update cascade on delete cascade,
+	foreign key (follower) references users(email) on update cascade on delete cascade
+);
+
+create table threads (
+	id int primary key auto_increment,
+	createDate timestamp DEFAULT current_timestamp,
+	forum varchar(60) not null,
+	isClosed boolean,
+	isDeleted boolean,
+	message text not null,
+	slug varchar(60) not null,
+	title varchar(60) not null,
+	userEmail varchar(30) not null,
+	likes int default 0,
+	dislikes int default 0,
+	posts int default 0,
+	foreign key (userEmail) references users(email) on update cascade on delete cascade,
+	foreign key (forum) references forums(shortname) on update cascade on delete cascade
+);
+
+
+create table subscribes (
+	id int primary key auto_increment,
+	thread int not null,
+	userEmail varchar(30) not null,
+	unique (thread, userEmail),
+	foreign key (userEmail) references users(email) on update cascade on delete cascade,
+	foreign key (thread) references threads(id) on update cascade on delete cascade
+);
+
+create table posts (
+	id int primary key auto_increment,
+	createDate timestamp DEFAULT current_timestamp,
+	forum varchar(60) not null,
+	isHighlighted boolean default false,
+	isApproved boolean default false,
+	isDeleted boolean default false,
+	isEdited boolean default false,
+	isSpam boolean default false,
+	message text not null,
+	parent int default null,
+	thread int not null,
+	userEmail varchar(30) not null,
+	likes int default 0,
+	dislikes int default 0,
+	mpath varchar(255) default null,
+	foreign key (userEmail) references users(email) on update cascade on delete cascade,
+	foreign key (forum) references forums(shortname) on update cascade on delete cascade,
+	foreign key (thread) references threads(id) on update cascade on delete cascade
+);
+/* \/ не реализовано */
+
+/* Передавать дату создания?  
+https://github.com/s-stupnikov/technopark-db-api/blob/master/doc/post/create.md
+*/
+
+/* триггеры */
+delimiter |
+
+CREATE TRIGGER add_count_posts AFTER INSERT ON posts
+  FOR EACH ROW
+  BEGIN
+    UPDATE threads SET posts = posts + 1 WHERE id = NEW.thread;
+  END;
+|
+delimiter ;
+
+
+delimiter |
+CREATE TRIGGER update_count_posts AFTER UPDATE ON posts
+  FOR EACH ROW
+  BEGIN
+  	IF old.isDeleted != new.isDeleted then 
+  	update threads set posts = (select count(*) from posts where thread = new.thread and isDeleted = 0) where id = new.thread;
+  	end if;
+  END;
+|
+delimiter ;
+
+
+
+
+

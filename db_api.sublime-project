@@ -1,0 +1,16 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		}
+	],
+	"settings": {
+		"python_interpreter": "$project_path/env/bin/python",
+		"python_package_paths": [
+			"$project_path/env/lib/python2.7/site-packages",
+		]
+	}
+
+}

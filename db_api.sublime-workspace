@@ -1,0 +1,635 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"In",
+				"IntegrityError	class"
+			],
+			[
+				"_my",
+				"_mysql_exceptions	module"
+			],
+			[
+				"co",
+				"connection"
+			],
+			[
+				"mysq",
+				"mysql"
+			],
+			[
+				"ex",
+				"execute"
+			],
+			[
+				"Ke",
+				"KeyError	class"
+			],
+			[
+				"tr",
+				"try	Try/Except"
+			],
+			[
+				"ke",
+				"KeyError	class"
+			],
+			[
+				"user",
+				"username"
+			],
+			[
+				"us",
+				"username"
+			],
+			[
+				"a",
+				"about"
+			],
+			[
+				"re",
+				"return	keyword"
+			],
+			[
+				"is",
+				"isAnonymous	statement"
+			],
+			[
+				"f",
+				"format	function"
+			],
+			[
+				"pr",
+				"print	keyword"
+			],
+			[
+				"fo",
+				"foreign"
+			],
+			[
+				"cre",
+				"createDate"
+			],
+			[
+				"de",
+				"delete"
+			],
+			[
+				"u",
+				"update"
+			],
+			[
+				"c",
+				"current_timestamp"
+			],
+			[
+				"fla",
+				"flask	module"
+			],
+			[
+				"i",
+				"import	keyword"
+			],
+			[
+				"js",
+				"jsonify	statement"
+			],
+			[
+				"mys",
+				"mysql"
+			],
+			[
+				"r",
+				"route"
+			],
+			[
+				"g",
+				"gameTable_row"
+			],
+			[
+				"gam",
+				"gameTable"
+			],
+			[
+				"b",
+				"bootstrap"
+			],
+			[
+				"s",
+				"src"
+			],
+			[
+				"fun",
+				"fun	Function"
+			],
+			[
+				"ma",
+				"mainTmpl"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"lo",
+				"loads"
+			],
+			[
+				"jo",
+				"joke_dict"
+			],
+			[
+				"ge",
+				"get_weather"
+			],
+			[
+				"get",
+				"get_location"
+			],
+			[
+				"rg",
+				"rgba()"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "db_api.py",
+			"settings":
+			{
+				"buffer_size": 1693,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "migrations/migration_db_v_0_1",
+			"settings":
+			{
+				"buffer_size": 1676,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "DISCR = {\n	'forum': {\n		'fields': {\n			'user': '```str``` founder email',\n			'short_name': '```str``` forum slug',\n			'name': '```str``` forum name',\n			'order': \"```str``` sort order (by date). Possible values: ```['desc', 'asc']```. Default: 'desc'\",\n			'limit': \"```int``` return limit\",\n			'forum': '```str``` forum short_name',\n			'since_id': \"```int``` return entities in interval [since_id, max_id]\",\n			'since': \"```str``` include forums created since date. Format: 'YYYY-MM-DD hh-mm-ss'\",\n			'related': \"```array``` include related entities. Possible values: ```['user',]```. Default: []\",\n		},\n		'methods': {\n			'create': 'Create new forum',\n			'details': 'Get forum details',\n			'listPosts': 'Get posts from this forum',\n			'listThreads': 'Get threads from this forum',\n			'listUsers': 'Get user with posts on this forum',\n		}\n	},\n	'post': {\n		'fields': {\n			'user': '```str``` author email',\n			'order': \"```str``` sort order (by date). Possible values: ```['desc', 'asc']```. Default: 'desc'\",\n			'thread': '```int``` thread id of this post',\n			'post': '```int``` post id',\n			'parent': '```int``` id of parent post. Default: None',\n			'forum': '```str``` forum short_name',\n			'message': '```str``` post body',\n			'vote': \"```int``` like/dislike. Possible values: [1, -1]\",\n			'date': \"```str``` date of creation. Format: 'YYYY-MM-DD hh-mm-ss'\",\n			'since': \"```str``` include posts created since date. Format: 'YYYY-MM-DD hh-mm-ss'\",\n			'related': \"```array``` include related entities. Possible values: ```['user', 'thread', 'forum']```. Default: []\",\n			'limit': \"```int``` return limit\",\n			'isSpam': \"```bool``` is post marked as spam\",\n			'isEdited': \"```bool``` is post marked as edited\",\n			'isDeleted': \"```bool``` is post marked as deleted\",\n			'isHighlighted': \"```bool``` is post marked as higlighted\",\n			'isApproved': \"```bool``` is post marked as approved by moderator\",\n		},\n		'methods': {\n			'list': 'List posts',\n			'create': 'Create new post',\n			'details': 'Get post details',\n			'remove': 'Mark post as removed',\n			'restore': 'Cancel removal',\n			'update': 'Edit post',\n			'vote': 'like/dislike post',\n		}\n	},\n	'user': {\n		'fields': {\n			'since': \"```str``` include posts from this user created since date. Format: 'YYYY-MM-DD hh-mm-ss'\",\n			'order': \"```str``` sort order (by name). Possible values: ```['desc', 'asc']```. Default: 'desc'\",\n			'user': '```str``` user email',\n			'username': '```str``` user name',\n			'follower': '```str``` follower email',\n			'followee': '```str``` followee email',\n			'name': '```str``` user name',\n			'limit': \"```int``` return limit\",\n			'since_id': \"```int``` return entities in interval [since_id, max_id]\",\n			'email': '```str``` user email',\n			'isAnonymous': \"```bool``` is user marked as anonymous\",\n			'about': \"```str``` user info\",\n		},\n		'methods': {\n			'create': 'Create new user',\n			'details': 'Get user details',\n			'follow': 'Mark one user as folowing other user',\n			'unfollow': 'Mark one user as not folowing other user anymore',\n			'listPosts': 'Get posts from this user',\n			'updateProfile': 'Update profile',\n			'listFollowers': 'Get followers of this user',\n			'listFollowing': 'Get followees of this user',\n		}\n	},\n	'thread': {\n		'fields': {\n			'thread': '```int``` thread id of this post',\n			'isDeleted': \"```bool``` is thread marked as deleted\",\n			'isClosed': \"```bool``` is thread marked as closed\",\n			'message': '```str``` thread message',\n			'user': '```str``` founder email',\n			'date': \"```str``` date of creation. Format: 'YYYY-MM-DD hh-mm-ss'\",\n			'slug': \"```str``` thread slug\",\n			'title': \"```str``` thread title\",\n			'limit': \"```int``` return limit\",\n			'forum': '```str``` parent forum short_name',\n			'related': \"```array``` include related entities. Possible values: ```['user', 'forum']```. Default: []\",\n			'since': \"```str``` include threads created since date. Format: 'YYYY-MM-DD hh-mm-ss'\",\n			'order': \"```str``` sort order (by date). Possible values: ```['desc', 'asc']```. Default: 'desc'\",\n			'vote': \"```int``` like/dislike. Possible values: [1, -1]\",\n		},\n		'methods': {\n			'list': 'List threads',\n			'create': 'Create new thread',\n			'details': 'Get thread details',\n			'remove': 'Mark thread as removed',\n			'open': 'Mark thread as opened',\n			'close': 'Mark thread as closed',\n			'restore': 'Cancel removal',\n			'listPosts': 'Get posts from this thread',\n			'update': 'Edit thread',\n			'subscribe': 'Subscribe user to this thread',\n			'unsubscribe': 'Unsubscribe user from this thread',\n			'vote': 'like/dislike thread',\n		}\n	}\n}",
+			"settings":
+			{
+				"buffer_size": 4562,
+				"line_ending": "Unix",
+				"name": "DISCR = {"
+			}
+		},
+		{
+			"contents": "#create user\n\ncurl -H \"Content-Type: application/json\" -d '{\"name\":\"boris\",\"username\":\"boris\"}' http://0.0.0.0:5000/db/api/user/create",
+			"file": "curls",
+			"file_size": 0,
+			"file_write_time": 130703165080000000,
+			"settings":
+			{
+				"buffer_size": 134,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 167.0,
+		"selected_items":
+		[
+			[
+				"py",
+				"Set Syntax: Python"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"pl",
+				"Package Control: List Packages"
+			],
+			[
+				"pyth",
+				"Set Syntax: Python"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"paca",
+				"Preferences: Browse Packages"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 348.0,
+		"history":
+		[
+			"ls -al",
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/Boris/db_api",
+		"/Users/Boris/db_api/env",
+		"/Users/Boris/db_api/migrations"
+	],
+	"file_history":
+	[
+		"/Users/Boris/db_api/db_api.sublime-project",
+		"/Users/Boris/db_api/migration_db_v_0_1",
+		"/Users/Boris/db_api/migration_db",
+		"/Users/Boris/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/Boris/db_api/ad_api.sublime-project",
+		"/Users/Boris/db_api/env/lib/python2.7/site-packages/MySQLdb/__init__.py",
+		"/usr/local/etc/nginx/nginx.conf",
+		"/Users/Boris/front_and_java/temp/tp_java/src/main/java/frontend/SignInServlet.java",
+		"/Users/Boris/front_and_java/temp/tp_java/src/main/java/frontend/SignUpServlet.java",
+		"/Users/Boris/front_and_java/temp/tp_java/server_tml/admin.tml",
+		"/Users/Boris/front_and_java/filler_game/public_html/js/collections/scores.js",
+		"/Users/Boris/front_and_java/filler_game/templates/login.xml",
+		"/Users/Boris/front_and_java/filler_game/filler_game.iml",
+		"/Users/Boris/front_and_java/filler_game/templates/registration.xml",
+		"/Users/Boris/front_and_java/filler_game/public_html/js/views/scoreboard.js",
+		"/Users/Boris/front_and_java/filler_game/public_html/index.html",
+		"/Users/Boris/front_and_java/filler_game/templates/addons/header.xml",
+		"/Users/Boris/front_and_java/filler_game/public_html/js/main.js",
+		"/Users/Boris/front_and_java/filler_game/templates/game.xml",
+		"/Users/Boris/front_and_java/filler_game/public_html/js/router.js",
+		"/Users/Boris/front_and_java/filler_game/public_html/bootstrap/js/bootstrap.min.js",
+		"/Users/Boris/front_and_java/filler_game/public_html/js/models/score.js",
+		"/Users/Boris/front_and_java/epicgame/public_html/js/models/score.js",
+		"/Users/Boris/Desktop/Лаб для бакалавров МП системы Хартов/ПРОГРАММЫ/1_1.asm",
+		"/Users/Boris/front_and_java/filler_game/gruntfile.js",
+		"/Users/Boris/front_and_java/filler_game/public_html/js/views/game.js",
+		"/Users/Boris/front_and_java/epicgame/Gruntfile.js",
+		"/Users/Boris/front_and_java/epicgame/public_html/js/main.js",
+		"/Users/Boris/front_and_java/epicgame/public_html/js/router.js",
+		"/Users/Boris/front_and_java/epicgame/server/server.js",
+		"/Users/Boris/front_and_java/epicgame/routes/scores.js",
+		"/Users/Boris/front_and_java/epicgame/public/js/collections/scores.js",
+		"/Users/Boris/front_and_java/epicgame/public/examples/joystick.js",
+		"/Users/Boris/front_and_java/epicgame/public/examples/console.js",
+		"/Users/Boris/front_and_java/epicgame/public/css/main.css",
+		"/Users/Boris/front_and_java/epicgame/app.js",
+		"/Users/Boris/front_and_java/epicgame/public_html/js/views/game.js",
+		"/Users/Boris/front_and_java/filler_game/templates/scoreboard.xml",
+		"/Users/Boris/front_and_java/filler_game/templates/main.xml",
+		"/Users/Boris/Downloads/technopark-db-api-master/conf/test.conf",
+		"/Users/Boris/Desktop/L1.2/public_html/css/main.css",
+		"/Users/Boris/front_and_java/filler_game/package.json",
+		"/Users/Boris/Desktop/L1.2/public_html/timer.tml",
+		"/Users/Boris/Desktop/L1.2/public_html/authform.tml",
+		"/Users/Boris/Desktop/L1.2/package.json",
+		"/Users/Boris/Desktop/L1.2/Gruntfile.js",
+		"/Users/Boris/Desktop/L1.2/L1.2.iml",
+		"/Users/Boris/Desktop/L1.2/assembly.bat",
+		"/Users/Boris/Desktop/L1.2/start.bat",
+		"/Users/Boris/front_and_java/epicgame/package.json",
+		"/Users/Boris/front_and_java/epicgame/tst/public_html/js/main.js",
+		"/Users/Boris/front_and_java/epicgame/tst/public_html/js/lib/require.js",
+		"/Users/Boris/front_and_java/epicgame/gruntfile.js",
+		"/Users/Boris/front_and_java/epicgame/public_html/js/lib/jquery.js",
+		"/Users/Boris/front_and_java/epicgame/public_html/index.html",
+		"/Users/Boris/front_and_java/epicgame/public_html/js/tmpl/game.js",
+		"/Users/Boris/Downloads/technopark-db-api-master/doc/clear.md",
+		"/Users/Boris/Downloads/technopark-db-api-master/doc/doc_template.md",
+		"/Users/Boris/Downloads/technopark-db-api-master/doc/doc_conf.py",
+		"/Users/Boris/front_and_java/epicgame/node_modules/grunt/README.md",
+		"/Users/Boris/front_and_java/epicgame/node_modules/grunt/package.json",
+		"/Users/Boris/front_and_java/epicgame/node_modules/grunt/CONTRIBUTING.md",
+		"/Users/Boris/Downloads/6_stream.c",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/my.widget/index.coffee",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/my.widget/location.py",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/my.widget/helper.py",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/my.widget/my_script.py",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/index.coffee",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/my_script.py",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/weather.widget/index.coffee",
+		"/Users/Boris/Desktop/my_script.py",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/roundClock.widget/index.coffee",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/sys-mon-set.widget/mini-top-mem.widget/index.coffee",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/sys-mon-set.widget/battery.widget/index.coffee",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/sys-mon-set.widget/README.md",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/youtube/Youtube.command/config.json",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/youtube/Youtube.command/node_modules/numeral/languages.js",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/youtube/Youtube.command/node_modules/numeral/bower.json",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/youtube/Youtube.command/node_modules/config/config.js",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/youtube/Youtube.command/node_modules/config/component.json",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/youtube/Youtube.command/youtube.js",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/youtube/Youtube.widget/index.coffee",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/youtube/Youtube.command/node_modules/numeral/README.md",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/youtube/Youtube.command/node_modules/config/package.json",
+		"/Users/Boris/Downloads/itunes-now.widget/index.coffee",
+		"/Users/Boris/Library/Application Support/Übersicht/widgets/getting-started.coffee",
+		"/Users/Boris/Downloads/ipflt/ipflt.sh",
+		"/Users/Boris/.wine/drive_c/users/Boris/Documents/My Games/Binding of Isaac Rebirth/options.ini",
+		"/Users/Boris/.wine/drive_c/Program Files/R.G. Gamblers/The Binding of Isaac Rebirth/ALI213.ini",
+		"/Users/Boris/.vim/bundle/YouCompleteMe/autoload/youcompleteme.vim",
+		"/Users/Boris/.vim/color scheme/desert.vim",
+		"/Users/Boris/Downloads/cpp11/cpp11.vim",
+		"/Users/Boris/.vim/cpp.vim",
+		"/Users/Boris/Desktop/The Binding of Isaac Rebirth.desktop",
+		"/Users/Boris/Downloads/44100/source/igdc57/igdc57.vcproj",
+		"/Users/Boris/Documents/ШЛАК/Untitled Model 4.gps",
+		"/Users/Boris/Desktop/курсач/11проект/Исходные коды/Unit1.pas",
+		"/Users/Boris/Desktop/курсач/11проект/Исходные коды/Unit11.pas",
+		"/Users/Boris/Desktop/курсач/11проект/Исходные коды/Unit10.pas",
+		"/Users/Boris/Desktop/bootstrap.min.css",
+		"/Users/Boris/Downloads/bootstrap-material.css",
+		"/Users/Boris/Desktop/курсач/11проект/Исходные коды/Unit9.pas",
+		"/Users/Boris/Desktop/курсач/11проект/Исходные коды/Unit8.pas",
+		"/Users/Boris/Desktop/курсач/11проект/Исходные коды/Unit7.pas",
+		"/Users/Boris/Desktop/курсач/11проект/Исходные коды/Unit6.pas",
+		"/Users/Boris/Desktop/курсач/11проект/Исходные коды/Unit5.pas",
+		"/Users/Boris/Desktop/курсач/11проект/Исходные коды/Unit4.pas",
+		"/Users/Boris/Desktop/курсач/11проект/Исходные коды/Unit3.pas",
+		"/Users/Boris/Desktop/курсач/11проект/Исходные коды/Unit2.pas",
+		"/Users/Boris/Qt/5.3/clang_64/mkspecs/macx-clang/qmake.conf",
+		"/Users/Boris/Downloads/apache2.conf",
+		"/Users/Boris/Desktop/C++/Prog8(Vect)/Vectsolve/Vs.cpp",
+		"/Users/Boris/Desktop/C++/Prog8(Vect)/Vectsolve/Vheader.h",
+		"/Users/Boris/Desktop/C++/Prog8(Vect)/Vectsolve/Vheader.cpp",
+		"/Users/Boris/Desktop/C++/Prog7(Double_linked_list)/Prog7(Double_linked_list)/Prg7.cpp",
+		"/Users/Boris/Desktop/C++/Prog7(Double_linked_list)/Prog7(Double_linked_list)/DblLinkedList.cpp",
+		"/Users/Boris/Desktop/C++/Prog7(Double_linked_list)/Prog7(Double_linked_list)/DblLinkedList.h",
+		"/Users/Boris/Desktop/C++/Prog7(Double_linked_list)/Prog7(Double_linked_list)/Prg7.h",
+		"/Users/Boris/Kurs/Kurs.pro.user",
+		"/Volumes/ADATA UFD/11проект/Программа по проекту/Unit1.pas",
+		"/Applications/Hearthstone/DBF/CARD_BACK.xml",
+		"/Applications/Hearthstone/DBF/ACHIEVE.xml",
+		"/Applications/Hearthstone/DBF/WING.xml",
+		"/Applications/Hearthstone/manifest-achieves.csv",
+		"/Applications/Hearthstone/manifest-cards.csv",
+		"/Applications/Hearthstone/Launcher.db",
+		"/Applications/Hearthstone/Hearthstone.tfil",
+		"/Applications/Hearthstone/Hearthstone.mfil"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"connect",
+			"cursor",
+			");\n",
+			"datamain",
+			"print",
+			"Helve"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "db_api.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1693,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1519,
+								1519
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 350.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "migrations/migration_db_v_0_1",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1676,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1673,
+								1673
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQL/SQL.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 160.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4562,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2142,
+								2142
+							]
+						],
+						"settings":
+						{
+							"auto_name": "DISCR = {",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1259.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "curls",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 134,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								134,
+								14
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 118.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "db_api.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 285.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
