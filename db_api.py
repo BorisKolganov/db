@@ -20,7 +20,6 @@ connection = mysql.connect()
 
 """FORUMS"""
 
-
 @app.route('/db/api/forum/create/', methods=['POST'])
 def forum_create():
 	cursor = connection.cursor()
@@ -44,11 +43,11 @@ def forum_create():
 		return jsonify(code=1, response='user does not exist')
 	except IntegrityError, e:
 		if e[0] == 1062:
-			return jsonify(code=2, response=get_forum_info(short_name, connection))
+			return jsonify(code=0, response=get_forum_info(short_name, connection))
 		elif e[0] == 1452:
-			return jsonify(code=2, response='user not found')
-	#except:
-	#	return jsonify(code=2, response='bad request')
+			return jsonify(code=1, response='user not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route('/db/api/forum/details/', methods=['GET'])
 def forum_details():
@@ -57,11 +56,11 @@ def forum_details():
 		related = request.args.getlist('related')
 		return jsonify(code=0, response=get_forum_info(forum, connection, related))
 	except KeyError:
-		return ("invalid forum_details")
+		return jsonify(code=2, response='invalid json')
 	except DoesNotExist:
-		return jsonify(code=0, response="not found")
-	return ("forum_details")
-
+		return jsonify(code=1, response="not found")
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route('/db/api/forum/listPosts/', methods=['GET'])
 def forum_listPosts():	
@@ -88,11 +87,11 @@ def forum_listPosts():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except DoesNotExist:
-		return jsonify(code=2, response='does not exist')
+		return jsonify(code=1, response='does not exist')
 	except IntegrityError, e:
-		return jsonify(code=2, response='something not found')
-	return ("listThreads")
-	return ("listPosts")
+		return jsonify(code=1, response='something not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route('/db/api/forum/listThreads/', methods=['GET'])
 def forum_listThreads():
@@ -119,10 +118,11 @@ def forum_listThreads():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except DoesNotExist:
-		return jsonify(code=2, response='does not exist')
+		return jsonify(code=1, response='does not exist')
 	except IntegrityError, e:
-		return jsonify(code=2, response='something not found')
-	return ("listThreads")
+		return jsonify(code=1, response='something not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route('/db/api/forum/listUsers/', methods=['GET'])
 def forum_listUsers():
@@ -151,13 +151,11 @@ def forum_listUsers():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except DoesNotExist:
-		return jsonify(code=2, response='does not exist')
+		return jsonify(code=1, response='does not exist')
 	except IntegrityError, e:
-		return jsonify(code=2, response='something not found')
-	return ("listThreads")
-	
-
-
+		return jsonify(code=1, response='something not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 """USERS"""
 @app.route('/db/api/user/create/', methods=['POST'])
@@ -188,8 +186,8 @@ def user_create():
 		return jsonify(code=2, response='invalid json')
 	except IntegrityError:
 		return jsonify(code=5,response='user alredy exist')
-	#except:
-	#	return jsonify(code=2, response='bad request')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route('/db/api/user/follow/', methods=["POST"])
 def user_follow():
@@ -209,10 +207,10 @@ def user_follow():
 		if e[0] == 1062:
 			return jsonify(code=0, response=get_user_info(follower, connection))
 		elif e[0] == 1452:
-			return jsonify(code=2, response='user not found')
-	#except:
-	#	return jsonify(code=2,response='bad request')
-		
+			return jsonify(code=1, response='user not found')
+	except:
+		return jsonify(code=4, response='opps')
+	
 @app.route('/db/api/user/unfollow/', methods=['POST'])
 def user_unfollow():
 	cursor = connection.cursor()
@@ -223,12 +221,17 @@ def user_unfollow():
 		cursor.execute("delete from follows where followee = %s and follower = %s",(followee, follower))
 		connection.commit()
 		cursor.close()
+		return jsonify(code=0, 
+				   response=get_user_info(follower, connection))
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
-	#except:
-	#	return jsonify(code=2,response='bad request')
-	return jsonify(code=0, 
-				   response=get_user_info(follower, connection))
+	except IntegrityError, e:
+		if e[0] == 1062:
+			return jsonify(code=0, response=get_user_info(follower, connection))
+		elif e[0] == 1452:
+			return jsonify(code=1, response='user not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route('/db/api/user/details/', methods=['GET'])
 def user_details():
@@ -236,8 +239,14 @@ def user_details():
 		user = request.args['user']
 		return jsonify(code=0, response=get_user_info(user, connection))
 	except KeyError:
-		return ("invalid user_details")
-	return ("forum_details")
+		return jsonify(code=2, response='invalid json')
+	except IntegrityError, e:
+		if e[0] == 1062:
+			return jsonify(code=0, response=get_user_info(user, connection))
+		elif e[0] == 1452:
+			return jsonify(code=1, response='user not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route('/db/api/user/listFollowers/', methods=['GET'])
 def user_listFollowers():
@@ -263,11 +272,11 @@ def user_listFollowers():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except DoesNotExist:
-		return jsonify(code=2, response='does not exist')
+		return jsonify(code=1, response='does not exist')
 	except IntegrityError, e:
-		return jsonify(code=2, response='something not found')
-	#except:
-	#	return jsonify(code=2, response='bad request')
+		return jsonify(code=1, response='something not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route('/db/api/user/listFollowing/', methods=['GET'])
 def user_listFollowing():
@@ -293,9 +302,11 @@ def user_listFollowing():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except DoesNotExist:
-		return jsonify(code=2, response='does not exist')
+		return jsonify(code=1, response='does not exist')
 	except IntegrityError, e:
-		return jsonify(code=2, response='something not found')
+		return jsonify(code=1, response='something not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route('/db/api/user/updateProfile/', methods=['POST'])
 def user_update():
@@ -313,9 +324,9 @@ def user_update():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except IntegrityError:
-		return jsonify(code=5, response='user alredy exist')
-	#except:
-	#	return jsonify(code=2, response='bad request')
+		return jsonify(code=1, response='user not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route('/db/api/user/listPosts/', methods=['GET'])
 def user_listPosts():
@@ -342,15 +353,11 @@ def user_listPosts():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except DoesNotExist:
-		return jsonify(code=2, response='does not exist')
+		return jsonify(code=1, response='does not exist')
 	except IntegrityError, e:
-		return jsonify(code=2, response='something not found')
-	return ("listThreads")
-
-
-
-
-
+		return jsonify(code=1, response='something not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 """Threads"""
 
@@ -387,11 +394,11 @@ def thread_create():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except DoesNotExist:
-		return jsonify(code=2, response='does not exist')
+		return jsonify(code=1, response='does not exist')
 	except IntegrityError, e:
-		return jsonify(code=2, response='something not found')
-	#except:
-	#	return jsonify(code=2, response='bad request')
+		return jsonify(code=1, response='something not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/thread/details/", methods=["GET"])
 def thread_details():
@@ -408,8 +415,8 @@ def thread_details():
 		return jsonify(code=2, response='something not found')
 	except InvalidArg:
 		return jsonify(code=3, response='wrong args')
-	#except:
-	#	return jsonify(code=2, response='bad request')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/thread/subscribe/", methods=["POST"])
 def thread_subscribe():
@@ -429,9 +436,9 @@ def thread_subscribe():
 		if e[0] == 1062:
 			return jsonify(code=0, response={"thread": thread, "user": user})
 		elif e[0] == 1452:
-			return jsonify(code=2, response='user or thread not found')
-	#except:
-	#	return jsonify(code=2,response='bad request')
+			return jsonify(code=1, response='user or thread not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/thread/unsubscribe/", methods=["POST"])
 def thread_unsubscribe():
@@ -445,12 +452,10 @@ def thread_unsubscribe():
 		cursor.close()
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
-	#except:
-	#	return jsonify(code=2,response='bad request')
+	except:
+		return jsonify(code=4, response='opps')
 	return jsonify(code=0, 
 				   response={"thread": thread, "user": user})
-
-	return "unsubscribe"
 
 @app.route("/db/api/thread/update/", methods=['POST'])
 def thread_update():
@@ -468,9 +473,9 @@ def thread_update():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except IntegrityError:
-		return jsonify(code=5, response='user alredy exist')
-	return "thread_update"
-
+		return jsonify(code=1, response='not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/thread/close/", methods=['POST'])
 def thread_close():
@@ -486,8 +491,9 @@ def thread_close():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except IntegrityError:
-		return jsonify(code=5, response='user alredy exist')
-	return "thread_update"
+		return jsonify(code=1, response='thread not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/thread/open/", methods=['POST'])
 def thread_open():
@@ -503,8 +509,9 @@ def thread_open():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except IntegrityError:
-		return jsonify(code=5, response='user alredy exist')
-	return "thread_update"
+		return jsonify(code=1, response='not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/thread/remove/", methods=['POST'])
 def thread_remove():
@@ -521,8 +528,9 @@ def thread_remove():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except IntegrityError:
-		return jsonify(code=5, response='user alredy exist')
-	return "thread_update"
+		return jsonify(code=1, response='not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/thread/restore/", methods=['POST'])
 def thread_restore():
@@ -539,8 +547,9 @@ def thread_restore():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except IntegrityError:
-		return jsonify(code=5, response='user alredy exist')
-	return "thread_update"
+		return jsonify(code=1, response='not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/thread/vote/", methods=['POST'])
 def thread_vote():
@@ -561,8 +570,9 @@ def thread_vote():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except IntegrityError:
-		return jsonify(code=5, response='user alredy exist')
-	return "thread_update"
+		return jsonify(code=1, response='not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/thread/list/", methods=['GET'])
 def thread_list():
@@ -599,10 +609,11 @@ def thread_list():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except DoesNotExist:
-		return jsonify(code=2, response='does not exist')
+		return jsonify(code=1, response='does not exist')
 	except IntegrityError, e:
-		return jsonify(code=2, response='something not found')
-	return ("listThreads")
+		return jsonify(code=1, response='something not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/thread/listPosts/", methods=['GET'])
 def thread_listPosts():
@@ -647,10 +658,11 @@ def thread_listPosts():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except DoesNotExist:
-		return jsonify(code=2, response='does not exist')
+		return jsonify(code=1, response='does not exist')
 	except IntegrityError, e:
-		return jsonify(code=2, response='something not found')
-	return ("listThreads")
+		return jsonify(code=1, response='something not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 """POSTS"""
 @app.route('/db/api/post/create/', methods=['POST'])
@@ -702,7 +714,10 @@ def post_create():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except DoesNotExist:
-		return jsonify(code=2, response='user does not exist')
+		return jsonify(code=1, response='post does not exist')
+	except:
+		return jsonify(code=4, response='opps')
+
 	#except IntegrityError, e:
 	#	if e[0] == 1062:
 	#		return jsonify(code=2, response=get_post_info(short_name, connection))
@@ -723,6 +738,8 @@ def post_details():
 		return jsonify(code=1, response='does not exist')
 	except IntegrityError, e:
 		return jsonify(code=1, response='something not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/post/remove/", methods=['POST'])
 def post_remove():
@@ -738,8 +755,9 @@ def post_remove():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except IntegrityError:
-		return jsonify(code=5, response='user alredy exist')
-	return "thread_update"
+		return jsonify(code=1, response='not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/post/restore/", methods=['POST'])
 def post_restore():
@@ -755,8 +773,9 @@ def post_restore():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except IntegrityError:
-		return jsonify(code=5, response='user alredy exist')
-	return "thread_update"
+		return jsonify(code=1, response='not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/post/vote/", methods=['POST'])
 def post_vote():
@@ -777,8 +796,9 @@ def post_vote():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except IntegrityError:
-		return jsonify(code=5, response='user alredy exist')
-	return "thread_update"
+		return jsonify(code=1, response='not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/post/update/", methods=['POST'])
 def post_update():
@@ -795,9 +815,9 @@ def post_update():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except IntegrityError:
-		return jsonify(code=5, response='user alredy exist')
-	return "thread_update"
-
+		return jsonify(code=1, response='not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/post/list/", methods=['GET'])
 def post_list():
@@ -833,40 +853,42 @@ def post_list():
 	except KeyError:
 		return jsonify(code=2, response='invalid json')
 	except DoesNotExist:
-		return jsonify(code=2, response='does not exist')
+		return jsonify(code=1, response='does not exist')
 	except IntegrityError, e:
-		return jsonify(code=2, response='something not found')
-	return ("listThreads")
+		return jsonify(code=1, response='something not found')
+	except:
+		return jsonify(code=4, response='opps')
 
 """OTHER"""
 @app.route('/db/api/clear/', methods=['POST'])
 def clear():
-	cursor = connection.cursor()
-	cursor.execute("""delete from users;""");
-	connection.commit()
-	cursor.close()
-	return jsonify(code=0, response="OK")
-
-
+	try:
+		cursor = connection.cursor()
+		cursor.execute("""delete from users;""");
+		connection.commit()
+		cursor.close()
+		return jsonify(code=0, response="OK")
+	except:
+		return jsonify(code=4, response='opps')
 
 @app.route("/db/api/status/", methods=['GET'])
 def status():
-	cursor = connection.cursor()
-	cursor.execute("select count(*) from users")
-	count_users = cursor.fetchone()[0]
-	cursor.execute("select count(*) from forums")
-	count_forums = cursor.fetchone()[0]
-	cursor.execute("select count(*) from threads")
-	count_threads = cursor.fetchone()[0]
-	cursor.execute("select count(*) from posts")
-	count_posts = cursor.fetchone()[0]
-	return jsonify(code=0, response={"user":count_users,
+	try:
+		cursor = connection.cursor()
+		cursor.execute("select count(*) from users")
+		count_users = cursor.fetchone()[0]
+		cursor.execute("select count(*) from forums")
+		count_forums = cursor.fetchone()[0]
+		cursor.execute("select count(*) from threads")
+		count_threads = cursor.fetchone()[0]
+		cursor.execute("select count(*) from posts")
+		count_posts = cursor.fetchone()[0]
+		return jsonify(code=0, response={"user":count_users,
 										"forum":count_forums,
 										"thread": count_threads,
 										"posts": count_posts})
-	
-
-
+	except:
+		return jsonify(code=4, response='opps')
 
 if __name__ == '__main__':
 	app.run(debug=True)
