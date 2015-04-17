@@ -5,6 +5,8 @@ from _mysql_exceptions import IntegrityError
 from helper import DoesNotExist, get_user_info, get_forum_info, get_thread_info, get_post_info, right_index
 import MySQLdb
 
+
+
 class InvalidArg(Exception):
 	pass
 
@@ -18,11 +20,15 @@ mysql.init_app(app)
 connection = mysql.connect()
 
 
+def curs():
+	connection.ping(True)
+	return connection.cursor()
+
 """FORUMS"""
 
 @app.route('/db/api/forum/create/', methods=['POST'])
 def forum_create():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		name = data['name']
@@ -64,7 +70,7 @@ def forum_details():
 
 @app.route('/db/api/forum/listPosts/', methods=['GET'])
 def forum_listPosts():	
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		forum = request.args['forum']
 		limit = request.args.get('limit', '')
@@ -95,7 +101,7 @@ def forum_listPosts():
 
 @app.route('/db/api/forum/listThreads/', methods=['GET'])
 def forum_listThreads():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		forum = request.args['forum']
 		limit = request.args.get('limit', '')
@@ -126,7 +132,7 @@ def forum_listThreads():
 
 @app.route('/db/api/forum/listUsers/', methods=['GET'])
 def forum_listUsers():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		forum = request.args['forum']
 		limit = request.args.get('limit', '')
@@ -161,7 +167,7 @@ def forum_listUsers():
 @app.route('/db/api/user/create/', methods=['POST'])
 def user_create():
 	try:
-		cursor = connection.cursor()
+		cursor = curs()
 		data = request.get_json()
 		#for k, v in data.values():
 		#	data[k] = MySQLdb.escape_string(v)
@@ -191,7 +197,7 @@ def user_create():
 
 @app.route('/db/api/user/follow/', methods=["POST"])
 def user_follow():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		follower = data['follower']
@@ -213,7 +219,7 @@ def user_follow():
 	
 @app.route('/db/api/user/unfollow/', methods=['POST'])
 def user_unfollow():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		follower = data['follower']
@@ -251,7 +257,7 @@ def user_details():
 @app.route('/db/api/user/listFollowers/', methods=['GET'])
 def user_listFollowers():
 	try:
-		cursor = connection.cursor()
+		cursor = curs()
 		user = request.args['user']
 		limit = request.args.get('limit', '')
 		order = request.args.get('order', 'desc')
@@ -280,7 +286,7 @@ def user_listFollowers():
 
 @app.route('/db/api/user/listFollowing/', methods=['GET'])
 def user_listFollowing():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		user = request.args['user']
 		limit = request.args.get('limit', '')
@@ -310,7 +316,7 @@ def user_listFollowing():
 
 @app.route('/db/api/user/updateProfile/', methods=['POST'])
 def user_update():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		name = data['name']
@@ -330,7 +336,7 @@ def user_update():
 
 @app.route('/db/api/user/listPosts/', methods=['GET'])
 def user_listPosts():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		user = request.args['user']
 		limit = request.args.get('limit', '')
@@ -363,7 +369,7 @@ def user_listPosts():
 
 @app.route('/db/api/thread/create/', methods=['POST'])
 def thread_create():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		date = data['date']
@@ -420,7 +426,7 @@ def thread_details():
 
 @app.route("/db/api/thread/subscribe/", methods=["POST"])
 def thread_subscribe():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		user = data['user']
@@ -442,7 +448,7 @@ def thread_subscribe():
 
 @app.route("/db/api/thread/unsubscribe/", methods=["POST"])
 def thread_unsubscribe():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		user = data['user']
@@ -459,7 +465,7 @@ def thread_unsubscribe():
 
 @app.route("/db/api/thread/update/", methods=['POST'])
 def thread_update():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		message = data['message']
@@ -479,7 +485,7 @@ def thread_update():
 
 @app.route("/db/api/thread/close/", methods=['POST'])
 def thread_close():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		thread = data['thread']
@@ -497,7 +503,7 @@ def thread_close():
 
 @app.route("/db/api/thread/open/", methods=['POST'])
 def thread_open():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		thread = data['thread']
@@ -515,7 +521,7 @@ def thread_open():
 
 @app.route("/db/api/thread/remove/", methods=['POST'])
 def thread_remove():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		thread = data['thread']
@@ -534,7 +540,7 @@ def thread_remove():
 
 @app.route("/db/api/thread/restore/", methods=['POST'])
 def thread_restore():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		thread = data['thread']
@@ -553,7 +559,7 @@ def thread_restore():
 
 @app.route("/db/api/thread/vote/", methods=['POST'])
 def thread_vote():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		vote = data['vote']
@@ -576,7 +582,7 @@ def thread_vote():
 
 @app.route("/db/api/thread/list/", methods=['GET'])
 def thread_list():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		user = request.args.get('user', False)
 		forum = request.args.get('forum', False)
@@ -617,7 +623,7 @@ def thread_list():
 
 @app.route("/db/api/thread/listPosts/", methods=['GET'])
 def thread_listPosts():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		thread = request.args['thread']
 
@@ -667,7 +673,7 @@ def thread_listPosts():
 """POSTS"""
 @app.route('/db/api/post/create/', methods=['POST'])
 def post_create():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 
@@ -743,7 +749,7 @@ def post_details():
 
 @app.route("/db/api/post/remove/", methods=['POST'])
 def post_remove():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		post = data['post']
@@ -761,7 +767,7 @@ def post_remove():
 
 @app.route("/db/api/post/restore/", methods=['POST'])
 def post_restore():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		post = data['post']
@@ -779,7 +785,7 @@ def post_restore():
 
 @app.route("/db/api/post/vote/", methods=['POST'])
 def post_vote():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		vote = data['vote']
@@ -802,7 +808,7 @@ def post_vote():
 
 @app.route("/db/api/post/update/", methods=['POST'])
 def post_update():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		data = request.get_json()
 		post = data['post']
@@ -821,7 +827,7 @@ def post_update():
 
 @app.route("/db/api/post/list/", methods=['GET'])
 def post_list():
-	cursor = connection.cursor()
+	cursor = curs()
 	try:
 		thread = request.args.get('thread', False)
 		forum = request.args.get('forum', False)
@@ -863,8 +869,8 @@ def post_list():
 @app.route('/db/api/clear/', methods=['POST'])
 def clear():
 	try:
-		cursor = connection.cursor()
-		cursor.execute("""delete from users;""");
+		cursor = curs()
+		cursor.execute("""delete from users""");
 		connection.commit()
 		cursor.close()
 		return jsonify(code=0, response="OK")
@@ -874,7 +880,7 @@ def clear():
 @app.route("/db/api/status/", methods=['GET'])
 def status():
 	try:
-		cursor = connection.cursor()
+		cursor = curs()
 		cursor.execute("select count(*) from users")
 		count_users = cursor.fetchone()[0]
 		cursor.execute("select count(*) from forums")
