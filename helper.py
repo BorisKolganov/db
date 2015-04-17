@@ -3,7 +3,7 @@ class DoesNotExist(Exception):
 		
 def get_user_info(user_email, connection):
 	cursor = connection.cursor()
-	if cursor.execute("select * from Users where email = '{}'".format(user_email)) == 0:
+	if cursor.execute("select * from users where email = '{}'".format(user_email)) == 0:
 		raise DoesNotExist
 	user = cursor.fetchone()
 	cursor.execute("select followee from follows where follower = '{}'".format(user[3]))
