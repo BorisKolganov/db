@@ -1,0 +1,32 @@
+Metadata-Version: 1.1
+Name: Flask-GAE-Mini-Profiler
+Version: 0.1.2
+Summary: Flask integration of gae_mini_profiler
+Home-page: http://packages.python.org/Flask-GAE-Mini-Profiler
+Author: Pascal Hartig
+Author-email: phartig@rdrei.net
+License: MIT
+Description: 
+        Flask-GAE-Mini-Profiler
+        -----------------------
+        
+        A drop-in, ubiquitous, production profiling tool for
+        `Flask <http://flask.pocoo.org>`_ applications on Google App Engine using
+        `gae_mini_profiler <http://bjk5.com/post/6944602865/google-app-engine-mini-profiler>`_.
+        
+        Links
+        `````
+        
+        * `documentation <http://packages.python.org/Flask-GAE-Mini-Profiler>`_
+        * `development version
+          <http://github.com/passy/flask-gae-mini-profiler/zipball/master#egg=Flask-GAE-Mini-Profiler-dev>`_
+        
+Platform: any
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Classifier: Topic :: Software Development :: Libraries :: Python Modules

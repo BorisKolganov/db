@@ -23,6 +23,8 @@ def get_user_info(user_email, connection):
 			'followers': list(t[0] for t in followee_follower),
 			'subscriptions': list(t[0] for t in subs)}
 
+
+
 def get_forum_info(forum_sname, connection, related=[]):
 	cursor = connection.cursor()
 	if cursor.execute("select * from forums where shortname = '{}'".format(forum_sname)) == 0:
@@ -33,6 +35,9 @@ def get_forum_info(forum_sname, connection, related=[]):
 			'name': forum[1],
 			'short_name': forum[2],
 			'user': forum[4] if 'user' not in related else get_user_info(forum[4], connection)}
+
+
+
 
 def get_thread_info(thread_id, connection, related=[]):
 	cursor = connection.cursor()

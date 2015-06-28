@@ -643,18 +643,19 @@ def thread_listPosts():
 			query += 'createDate {} '.format(order)
 			query += "limit {}".format(limit) if limit != '' else ''
 
-		elif sort == 'tree':
-			query = """select p2.id from posts as p join posts as p2 on p2.mpath 
-					like CONCAT(p.mpath,'%') and p.parent is null and thread = {} and createDate between '{}' and '{}'
-					order by p.mpath {} {};""".format(thread, since_date, max_date, order, 
-											   "limit {}".format(limit) if limit != '' else '')
-		else:
-			query = """select p2.id from posts as p2 join 
-			(select p.mpath, p.id from posts as p where parent is null {} ) as p 
-			on p2.mpath like CONCAT(p.mpath,'%') and thread = {} and createDate between '{}' and '{}' 
-			order by p.mpath {}""".format("limit {}".format(limit) if limit != '' else '',
-									thread, since_date, max_date, order)
-		
+		#elif sort == 'tree':
+		#	query = """select p2.id from posts as p join posts as p2 on p2.mpath 
+		#			like CONCAT(p.mpath,'%') and p.parent is null and thread = {} and createDate between '{}' and '{}'
+		#			order by p.mpath {} {};""".format(thread, since_date, max_date, order, 
+		#									   "limit {}".format(limit) if limit != '' else '')
+		#else:
+		#	query = """select p2.id from posts as p2 join 
+		#	(select p.mpath, p.id from posts as p where parent is null {} ) as p 
+		#	on p2.mpath like CONCAT(p.mpath,'%') and thread = {} and createDate between '{}' and '{}' 
+		#	order by p.mpath {}""".format("limit {}".format(limit) if limit != '' else '',
+		#							thread, since_date, max_date, order)
+		else: 
+			pass
 		cursor.execute(query)
 		a = []
 		for i in tuple(t[0] for t in cursor.fetchall()):

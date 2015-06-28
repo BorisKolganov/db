@@ -1,0 +1,117 @@
+create table users (
+	id int auto_increment unique,
+	name varchar(60),
+	username varchar(30),
+	email varchar(30) primary key,
+	about text,
+	isAnonymous boolean
+);
+
+
+
+create table forums (
+	id int auto_increment unique,
+	name varchar(60) not null unique,
+	shortname varchar(60) primary key,
+	date timestamp DEFAULT current_timestamp,
+	user varchar(30) not null,
+	foreign key (user) references users(email) on update cascade on delete cascade
+);
+
+
+
+
+create table follows (
+	id int primary key auto_increment,
+	followee varchar(30) not null,
+	follower varchar(30) not null,
+	unique (followee, follower),
+	foreign key (followee) references users(email) on update cascade on delete cascade,
+	foreign key (follower) references users(email) on update cascade on delete cascade
+);
+
+create table threads (
+	id int primary key auto_increment,
+	date timestamp DEFAULT current_timestamp,
+	forum varchar(60) not null,
+	isClosed boolean,
+	isDeleted boolean,
+	message text not null,
+	slug varchar(60) not null,
+	title varchar(60) not null,
+	user varchar(30) not null,
+	likes int default 0,
+	dislikes int default 0,
+	points int default 0,
+	posts int default 0,
+	foreign key (user) references users(email) on update cascade on delete cascade,
+	foreign key (forum) references forums(shortname) on update cascade on delete cascade
+);
+
+
+
+
+create table subscribes (
+	id int primary key auto_increment,
+	thread int not null,
+	user varchar(30) not null,
+	unique (thread, user),
+	foreign key (user) references users(email) on update cascade on delete cascade,
+	foreign key (thread) references threads(id) on update cascade on delete cascade
+);
+
+create table posts (
+	id int primary key auto_increment,
+	date timestamp DEFAULT current_timestamp,
+	forum varchar(60) not null,
+	isHighlighted boolean default false,
+	isApproved boolean default false,
+	isDeleted boolean default false,
+	isEdited boolean default false,
+	isSpam boolean default false,
+	message text not null,
+	parent int default null,
+	thread int not null,
+	user varchar(30) not null,
+	likes int default 0,
+	dislikes int default 0,
+	points int default 0,
+	mpath varchar(255) default null,
+	foreign key (user) references users(email) on update cascade on delete cascade,
+	foreign key (forum) references forums(shortname) on update cascade on delete cascade,
+	foreign key (thread) references threads(id) on update cascade on delete cascade
+);
+
+
+
+
+INDEXES
+
+ALTER TABLE follows ADD INDEX (follower,followee)
+ALTER TABLE follows ADD INDEX (followee,follower)
+
+ALTER TABLE subscribes ADD INDEX (user, thread)
+
+ALTER TABLE threads ADD INDEX (forum, date)
+
+ALTER TABLE threads ADD INDEX (user, date)
+
+ALTER TABLE posts ADD INDEX (forum, date)
+
+ALTER TABLE posts ADD INDEX (forum, user)
+
+ALTER TABLE posts ADD INDEX (thread, date)
+
+ALTER TABLE users ADD INDEX (name,email)
+
+
+
+
+
+
+
+
+
+
+
+
