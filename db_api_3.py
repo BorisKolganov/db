@@ -3,12 +3,13 @@ from _mysql_exceptions import IntegrityError
 from helper2_0 import get_forum_info, get_user_info, get_thread_info, get_post_info, DB, right_index, DoesNotExist
 import MySQLdb
 from datetime import datetime
-from flask.ext.runner import Runner
+
 
 
 app = Flask(__name__)
-app.debug = True
-runner = Runner(app)
+app.debug = False
+app.config['JSON_SORT_KEYS'] = False
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 
 db = DB()
@@ -1014,4 +1015,4 @@ def index():
 	return "lol"
 
 if __name__ == '__main__':
-	runner.run()
+	app.run()

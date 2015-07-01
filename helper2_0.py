@@ -5,7 +5,7 @@ class DoesNotExist(Exception):
 
 class DB():
 	def __init__(self):
-		self.connection = MySQLdb.connect(host="localhost", user="root", db="db_api")
+		self.connection = MySQLdb.connect(host="localhost", user="root", db="db_api_2")
 		#self.get_cursor().execute("SET FOREIGN_KEY_CHECKS = 0;");
 	def get_cursor(self, modif=None):
 		self.connection.ping(True)
